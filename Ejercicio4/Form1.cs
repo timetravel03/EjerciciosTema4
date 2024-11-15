@@ -75,7 +75,7 @@ namespace Ejercicio4
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (!Double.TryParse(this.textBox1.Text, out double op1))
+            if (!Double.TryParse(this.textBox1.Text, out double op1) && this.textBox1.Text != "")
             {
                 this.textBox1.BackColor = Color.Red;
             }
@@ -87,7 +87,7 @@ namespace Ejercicio4
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            if (!Double.TryParse(this.textBox2.Text, out double op1))
+            if (!Double.TryParse(this.textBox2.Text, out double op1) && this.textBox2.Text != "")
             {
                 this.textBox2.BackColor = Color.Red;
             }
