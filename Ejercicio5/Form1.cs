@@ -82,7 +82,7 @@ namespace Ejercicio5
             {
                 listaL1.Remove(item.ToString());
             }
-
+            this.labelIndices.Text = "Índices seleccionados:\n";
             RefrecarListbox();
         }
 
@@ -125,20 +125,26 @@ namespace Ejercicio5
         {
             //Traspasar de lista 1 a 2
             ListBox.SelectedObjectCollection elementosSeleccionados = this.listBox1.SelectedItems;
-            foreach (var item in elementosSeleccionados)
+            if (elementosSeleccionados != null || elementosSeleccionados.Count != 0)
             {
-                listaL2.Add(item.ToString());
-                listaL1.Remove(item.ToString());
+                foreach (var item in elementosSeleccionados)
+                {
+                    listaL2.Add(item.ToString());
+                    listaL1.Remove(item.ToString());
+                }
+                this.labelIndices.Text = "Índices seleccionados:\n";
+                RefrecarListbox();
             }
-            RefrecarListbox();
         }
 
         private void buttonTras2_Click(object sender, EventArgs e)
         {
-
-            listaL1.Add(this.listBox2.SelectedItem.ToString());
-            listaL2.Remove(this.listBox2.SelectedItem.ToString());
-            RefrecarListbox();
+            if (this.listBox2.SelectedItem != null)
+            {
+                listaL1.Add(this.listBox2.SelectedItem.ToString());
+                listaL2.Remove(this.listBox2.SelectedItem.ToString());
+                RefrecarListbox();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -147,7 +153,7 @@ namespace Ejercicio5
             char temp = titulo[0];
             for (int i = 0; i < titulo.Length; i++)
             {
-                
+
                 if (i < titulo.Length - 1)
                 {
                     titulo[i] = titulo[i + 1];
@@ -161,11 +167,12 @@ namespace Ejercicio5
             if (contador % 2 == 0)
             {
                 this.Icon = Properties.Resources.paper;
-            } else
+            }
+            else
             {
                 this.Icon = Properties.Resources.explorer;
             }
-            
+
         }
     }
 }
