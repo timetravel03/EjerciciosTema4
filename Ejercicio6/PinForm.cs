@@ -1,10 +1,12 @@
-﻿using System;
+﻿#define DEBUG
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +19,9 @@ namespace Ejercicio6
         private bool pass;
         private Button[] btnCol;
         private int intentos;
+#if DEBUG
+        Label labelDebug;
+#endif
 
         public PinForm()
         {
@@ -76,6 +81,7 @@ namespace Ejercicio6
 
         public void gestionPin(object sender, EventArgs e)
         {
+
             Button button = (Button)sender;
             if (pinTry.Length < pin.Length)
             {
@@ -94,6 +100,9 @@ namespace Ejercicio6
                     pinTry = "";
                 }
             }
+#if DEBUG
+            labelDebug.Text = "Intentos: " + intentos + " - Pin: " + pin + " - Intento actual: " + pinTry;
+#endif
             if (intentos >= 3)
             {
                 this.Close();
@@ -101,10 +110,18 @@ namespace Ejercicio6
         }
         private void PinForm_Load(object sender, EventArgs e)
         {
+#if DEBUG
+            labelDebug = new Label();
+            labelDebug.Location = new Point(5, 5);
+            labelDebug.Size = new Size(this.Width, labelDebug.Height);
+            labelDebug.Text = "Intentos: " + intentos + " - Pin: " + pin + " - Intento actual: " + pinTry;
+            this.Controls.Add(labelDebug);
+#endif
             if (pin == null)
             {
                 this.Close();
             }
+
         }
 
         public string Pin { set { pin = value; } }
