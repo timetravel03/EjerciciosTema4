@@ -67,8 +67,8 @@ namespace Ejercicio6
             this.textBox1.Text += ((Button)sender).Text;
             Button temp = ((Button)sender);
             temp.BackColor = Color.PeachPuff;
-            temp.MouseLeave -= new EventHandler(MouseLeaveButton);
-            temp.MouseEnter -= new EventHandler(MouseEnterButton);
+            temp.MouseLeave -= MouseLeaveButton;
+            temp.MouseEnter -= MouseEnterButton;
 
         }
 
@@ -101,8 +101,8 @@ namespace Ejercicio6
             foreach (Button btn in colBotones)
             {
                 btn.BackColor = Color.Gainsboro;
-                btn.MouseLeave += new EventHandler(MouseLeaveButton);
-                btn.MouseEnter += new EventHandler(MouseEnterButton);
+                btn.MouseLeave += MouseLeaveButton;
+                btn.MouseEnter += MouseEnterButton;
             }
         }
 
@@ -111,6 +111,7 @@ namespace Ejercicio6
             if (textBox1.Text != "" && textBox1.Text != null)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.OverwritePrompt = false; // Ahora ya no pregunta si quieres sobreescribir
                 saveFileDialog.Filter = "Archivos de texto|*.txt|Todos los archivos|*.*";
                 DialogResult fileResult = saveFileDialog.ShowDialog();
                 if (fileResult == DialogResult.OK)
