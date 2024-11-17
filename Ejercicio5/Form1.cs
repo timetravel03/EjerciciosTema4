@@ -14,8 +14,6 @@ namespace Ejercicio5
 {
     public partial class Form1 : Form
     {
-        private List<string> listaL1;
-        private List<string> listaL2;
         private ToolTip tooltip;
         private string tituloFormulario;
         private char[] titulo;
@@ -23,14 +21,12 @@ namespace Ejercicio5
         public Form1()
         {
             InitializeComponent();
-            listaL1 = new List<string>();
-            listaL2 = new List<string>();
 
             tooltip = new ToolTip();
             tooltip.InitialDelay = 200;
 
             tooltip.SetToolTip(this.textBox1, "Texto que se quiere añadir");
-            tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listaL2.Count);
+            tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listBox2.Items.Count);
             tooltip.SetToolTip(this.buttonTras, "Transfiere elementos de esta lista a la otra");
             tooltip.SetToolTip(this.buttonTras2, "Transfiere elementos de esta lista a la otra");
             tooltip.SetToolTip(this.buttonElim, "Elimina los elementos seleccionados en esta lista");
@@ -65,23 +61,6 @@ namespace Ejercicio5
             this.labelPrincipal.Text = String.Format("Nº de elementos: {0}", this.listBox1.Items.Count);
         }
 
-        private void RefrecarListbox()
-        {
-            this.listBox1.Items.Clear();
-            this.listBox2.Items.Clear();
-            foreach (string elemento in listaL1)
-            {
-                this.listBox1.Items.Add(elemento);
-            }
-            foreach (string elemento in listaL2)
-            {
-                this.listBox2.Items.Add(elemento);
-            }
-
-            this.labelPrincipal.Text = String.Format("Nº de elementos: {0}", this.listBox1.Items.Count);
-            tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listaL2.Count);
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string indicesFormato = "";
@@ -102,13 +81,16 @@ namespace Ejercicio5
 
         private void buttonTras_Click(object sender, EventArgs e)
         {
-            for (int i = listBox1.SelectedItems.Count - 1; i >= 0; i--)
+            List<string> selectedItems = listBox1.SelectedItems.Cast<string>().ToList();
+
+            foreach (var item in selectedItems)
             {
-                listBox2.Items.Add(listBox1.SelectedItems[i]);
-                listBox1.Items.Remove(listBox1.SelectedItems[i]);
+                listBox2.Items.Add(item);
+                listBox1.Items.Remove(item);
             }
+
             this.labelIndices.Text = "Índices seleccionados:\n";
-            tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listaL2.Count);
+            tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listBox2.Items.Count);
             this.labelPrincipal.Text = String.Format("Nº de elementos: {0}", this.listBox1.Items.Count);
         }
 
@@ -118,7 +100,7 @@ namespace Ejercicio5
             {
                 listBox1.Items.Add(this.listBox2.SelectedItem.ToString());
                 listBox2.Items.Remove(this.listBox2.SelectedItem.ToString());
-                tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listaL2.Count);
+                tooltip.SetToolTip(this.listBox2, "Nº de elementos: " + listBox2.Items.Count);
                 this.labelPrincipal.Text = String.Format("Nº de elementos: {0}", this.listBox1.Items.Count);
             }
         }
